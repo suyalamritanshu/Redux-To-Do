@@ -9,7 +9,7 @@ https://clever-ptolemy-efeb33.netlify.app/
 
 ## Features
 
-1) To do app using redux toolkit.
+1) To do app using react redux.
 2) Framer motion is added to css to create animations.
 3) Users can add, delete, update and create individual done tags to their todos.
 4) Responsive design.
