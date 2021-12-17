@@ -4,41 +4,58 @@ import { addTodos } from "../redux/reducer";
 import { GoPlus } from "react-icons/go";
 import { motion } from "framer-motion";
 
-const mapStateToProps = (state) =>{
-    return{
-        todos: state,
-    };
+const mapStateToProps = (state) => {
+  return {
+    todos: state,
+  };
 };
 
-const mapDispatchToProps = (dispatch) =>{
-    return {
-        addTodo: (obj) => dispatch(addTodos(obj))
-    }
-}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addTodo: (obj) => dispatch(addTodos(obj)),
+  };
+};
 
-const Todo = (props) => {
+const Todos = (props) => {
   const [todo, setTodo] = useState("");
+
   const handleChange = (e) => {
     setTodo(e.target.value);
   };
 
-  console.log("props from store", props);
+  const add = () => {
+    if (todo === "") {
+      alert("Input is Empty");
+    } else {
+      props.addTodo({
+        id: Math.floor(Math.random() * 1000),
+        item: todo,
+        completed: false,
+      });
+      setTodo("");
+    }
+  };
+  //console.log("props from store", props);
   return (
     <div className="addTodos">
       <input
         type="text"
         onChange={(e) => handleChange(e)}
         className="todo-input"
-      ></input>
-      <button className="add-btn" onClick={() => props.addTodo({
-          //we will write object/todo
-          id: Math.floor(Math.random()*1000),
-          item: todo,
-          completed: false,
-      })}>Add</button>
+        value={todo}
+      />
+
+      <motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className="add-btn"
+        onClick={() => add()}
+      >
+        <GoPlus />
+      </motion.button>
+      <br />
     </div>
   );
 };
-
-//We can connect this component with redux store using connect method
-export default connect(mapStateToProps, mapDispatchToProps)(Todo);
+//we can use connect method to connect this component with redux store
+export default connect(mapStateToProps, mapDispatchToProps)(Todos);
